@@ -1,0 +1,10 @@
+#ignore classpath
+.classpath
+#ignore project
+.project
+#ignore bin
+bin
+#ignore .settings
+.settings
+#ignore .metadata
+.metadata
