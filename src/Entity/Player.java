@@ -18,6 +18,7 @@ public	Image img,center,up1,up2,up3,down1,down2,down3,left1,left2,left3,right1,r
 	int live;
 	char direction ;
 	Wall wall;
+	int speed;
 public	int score;
 	public Player(KeyHandler kh,Wall wall)
 	{direction = 'n';

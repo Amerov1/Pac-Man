@@ -60,7 +60,7 @@ public KeyHandler kh;
 			gameState=gameRun;
 			
 		}
-		if(player.score==cheese.locations.size())
+		if(player.score==cheese.shapes.size())
 		{
 			mypanel.setRunning(false);
 			gameState=gameEndWin;
@@ -148,10 +148,10 @@ public KeyHandler kh;
 			g2d.setPaint(Color.WHITE);
 			g2d.setFont(g2d.getFont().deriveFont(Font.BOLD,150f));
 			g2d.drawString(text, 165, 125);
-			g2d.drawImage(img1, 295, 230, player.width*6, player.width*6,null);
-			g2d.drawImage(img2, 405, 290, player.width*3, player.width*3,null);
-			g2d.drawImage(img2, 495, 290, player.width*3, player.width*3,null);
-			g2d.drawImage(img2, 595, 290, player.width*3, player.width*3,null);	
+			g2d.drawImage(img1, 295, 230, player.getWdith()*6, player.getWdith()*6,null);
+			g2d.drawImage(img2, 405, 290, player.getWdith()*3, player.getWdith()*3,null);
+			g2d.drawImage(img2, 495, 290, player.getWdith()*3, player.getWdith()*3,null);
+			g2d.drawImage(img2, 595, 290, player.getWdith()*3, player.getWdith()*3,null);	
 			
 			//MENU
 			

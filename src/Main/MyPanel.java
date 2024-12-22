@@ -94,8 +94,6 @@ public void setRunning(boolean run)
         cheese.update();
         ghost1.update();
 		}
-	
-		
 	}
 	@Override
 	public void run() {

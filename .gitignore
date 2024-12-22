@@ -1,5 +1,6 @@
 #ignore classpath
 .classpath
+*.class
 #ignore project
 .project
 #ignore bin
@@ -8,3 +9,5 @@ bin
 .settings
 #ignore .metadata
 .metadata
+#ignore VSCode
+.vscode
