@@ -1,17 +1,11 @@
 package Main;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
-
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.Box.Filler;
-
 import Entity.Cheese;
-import Entity.Ghost;
 import Entity.KeyHandler;
 import Entity.Player;
 
@@ -21,24 +15,14 @@ public class GameState {
 	Player player;
 	Cheese cheese;
    MyPanel mypanel;
-public int gameStart;
-public int gameRun;
-public int gamePause;
-public int gameEndLost;
-public int gameEndWin;
-public int gameState;
+public StateOfGame state;
 public int select;
 public boolean b;
 public KeyHandler kh;
 	public GameState(Player player,Cheese cheese,MyPanel mypanel, KeyHandler kh)
 	{   b=true;
 		select=0;
-		gameStart=0;
-		gameRun=1;
-		gamePause=2;
-		gameEndLost=3;
-		gameEndWin=4;
-		gameState=gameStart;
+		state=StateOfGame.GameStart;
 		this.kh=kh;
 		this.player=player;
 		this.cheese=cheese;
@@ -57,22 +41,22 @@ public KeyHandler kh;
 		
 		if(select==0&&kh.enterPressed&&b)
 		{
-			gameState=gameRun;
+			state=StateOfGame.GameIsRunning;
 			
 		}
-		if(player.score==cheese.shapes.size())
+		if(player.getScore()==cheese.shapes.size())
 		{
 			mypanel.setRunning(false);
-			gameState=gameEndWin;
+			state=StateOfGame.GameEndWin;
 			b=false;//just one time per game
 		}
 		
-		if(gameState==gameRun &&kh.spacePressed)
+		if(state==StateOfGame.GameIsRunning &&kh.spacePressed)
 		{
-			gameState=gamePause;
-		}else if(gameState==gamePause &&kh.spacePressed)
+			state=StateOfGame.GamePause;
+		}else if(state==StateOfGame.GamePause &&kh.spacePressed)
 		{
-			gameState=gameRun;
+			state=StateOfGame.GameIsRunning;
 		}
 	}
 	public void draw(Graphics2D g2d)
@@ -82,7 +66,7 @@ public KeyHandler kh;
 	g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 	g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
 
-	 if(gameState==gameEndLost)
+	 if(state==StateOfGame.GameEndLost)
 		{
 			mypanel.setRunning(false);
 			g2d.setColor(new Color(0,0,0,95));
@@ -97,7 +81,7 @@ public KeyHandler kh;
 	        g2d.setColor(Color.WHITE);
 	        g2d.drawString(text, textX, textY);
 
-		}else if(gameState==gameEndWin)
+		}else if(state==StateOfGame.GameEndWin)
 		{
 			//mypanel.setRunning(false);
 			g2d.setColor(new Color(0,0,0,95));
@@ -112,13 +96,13 @@ public KeyHandler kh;
 	        g2d.setColor(Color.WHITE);
 	        g2d.drawString(text, textX, textY);
 
-		}else if(gameState==gameRun)
+		}else if(state==StateOfGame.GameIsRunning)
 		{
-		String textScore="Score :"+player.score;
+		String textScore="Score :"+player.getScore();
 		g2d.setColor(Color.WHITE);
 		g2d.setFont(new Font(textScore,1,32));
 		g2d.drawString(textScore,Font.ITALIC,650);
-		}else if(gameState==gamePause)
+		}else if(state==StateOfGame.GamePause)
 		{
 			//PAUSE
 			
@@ -133,7 +117,7 @@ public KeyHandler kh;
 		        int textY = centery ;
 		        g2d.setColor(Color.WHITE);
 		        g2d.drawString(text, textX, textY+100);	
-		}else  if(gameState==gameStart)
+		}else if(state==StateOfGame.GameStart)
 		   {
 			g2d.setPaint(new Color(0,0,0));
 			g2d.fillRect(0,0, 1000, 800);

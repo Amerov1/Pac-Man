@@ -34,7 +34,7 @@ public class Cheese extends Entity {
             if (this != null && e1 != null) {
                 if (p.getX() < e1.x + e1.width && p.getX() + width > e1.x && p.getY() < e1.y + e1.height && p.getY() + height > e1.y) {
                     shapes.remove(i);
-                	player.score++;   
+                	player.increaseScore();;   
                 }
             }
         }

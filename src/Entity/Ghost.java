@@ -13,6 +13,7 @@ import Block.Rectangle;
 import Block.Wall;
 import Main.GameState;
 import Main.MyPanel;
+import Main.StateOfGame;
 
 
 public class Ghost  implements ActionListener
@@ -132,10 +133,10 @@ public void update()
 {
 	if(check(player))
 	{
-		gs.gameState=gs.gameEndLost;
+		gs.state=StateOfGame.GameEndLost;
 		gs.b=false;
 	}
-	if(gs.gameState==gs.gameRun)
+	if(gs.state==StateOfGame.GameIsRunning)
 	{switch(direction1)
 	{
 	case 'u':{

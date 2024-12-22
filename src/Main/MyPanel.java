@@ -1,15 +1,10 @@
 package Main;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
-
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-
 import Entity.Cheese;
 import Block.Wall;
 import Entity.Ghost;
@@ -30,7 +25,6 @@ private Ghost ghost1;
 public char direction='r';
 private Cheese cheese;
 private GameState gs;
-private JButton button;
 public	MyPanel(int x,int y,int width,int height)
 	{ 
 	  running=true;
@@ -46,7 +40,6 @@ public	MyPanel(int x,int y,int width,int height)
 	    gs=new GameState(player1,cheese,this,kh);
 	    ghost1=new Ghost(wall,player1,gs,this);
 	    setFocusable(true);
-	    button = new JButton("Click Me");
 	    startRunning();
 	   
 	}
@@ -74,7 +67,7 @@ public void setRunning(boolean run)
 		Graphics2D g2d= (Graphics2D) g;
 		
 		
-		if(gs.gameState != gs.gameStart)
+		if(gs.state != StateOfGame.GameStart)
 		{
 		cheese.draw(g2d);
 		wall.draw(g2d);

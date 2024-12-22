@@ -11,15 +11,15 @@ import Block.Wall;
 public class Player extends Entity{
 
 	
-public	Image img,center,up1,up2,up3,down1,down2,down3,left1,left2,left3,right1,right2,right3;
+private	Image img,center,up1,down1,left1,right1;
 	KeyHandler kh;
 	int countNum;
 	int chooseIm;
 	int live;
 	char direction ;
 	Wall wall;
-	int speed;
-public	int score;
+private	int speed;
+private	int score;
 	public Player(KeyHandler kh,Wall wall)
 	{direction = 'n';
 	live=1;
@@ -38,6 +38,14 @@ public	int score;
         this.wall=wall;
 	    img=center;
 	    this.kh=kh;
+	}
+	public void increaseScore()
+	{
+		score++;
+	}
+	public int getScore()
+	{
+		return score;
 	}
 	public void update()
 	{//if( )
