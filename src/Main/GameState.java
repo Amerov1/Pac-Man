@@ -4,7 +4,10 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
+import java.awt.geom.AffineTransform;
+
 import javax.swing.ImageIcon;
+
 import Entity.Cheese;
 import Entity.KeyHandler;
 import Entity.Player;
@@ -15,14 +18,14 @@ public class GameState {
 	Player player;
 	Cheese cheese;
    MyPanel mypanel;
-public StateOfGame state;
+//spublic StateOfGame state;
 public int select;
 public boolean b;
 public KeyHandler kh;
 	public GameState(Player player,Cheese cheese,MyPanel mypanel, KeyHandler kh)
 	{   b=true;
 		select=0;
-		state=StateOfGame.GameStart;
+	//	state=StateOfGame.GameStart;
 		this.kh=kh;
 		this.player=player;
 		this.cheese=cheese;
@@ -41,34 +44,35 @@ public KeyHandler kh;
 		
 		if(select==0&&kh.enterPressed&&b)
 		{
-			state=StateOfGame.GameIsRunning;
+			MyPanel.setStateOfGame(StateOfGame.GameIsRunning);
 			
 		}
-		if(player.getScore()==cheese.shapes.size())
+		if(0==cheese.shapes.size())//Here is the issue
 		{
-			mypanel.setRunning(false);
-			state=StateOfGame.GameEndWin;
+			MyPanel.setStateOfGame(StateOfGame.GameEndWin);
 			b=false;//just one time per game
 		}
 		
-		if(state==StateOfGame.GameIsRunning &&kh.spacePressed)
+		if(MyPanel.getStateOfGame()==StateOfGame.GameIsRunning &&kh.spacePressed)
 		{
-			state=StateOfGame.GamePause;
-		}else if(state==StateOfGame.GamePause &&kh.spacePressed)
+			MyPanel.setStateOfGame(StateOfGame.GamePause);
+		}else if(MyPanel.getStateOfGame()==StateOfGame.GamePause &&kh.spacePressed)
 		{
-			state=StateOfGame.GameIsRunning;
+			MyPanel.setStateOfGame(StateOfGame.GameIsRunning);
 		}
 	}
 	public void draw(Graphics2D g2d)
-	{ g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+	{ 
+		AffineTransform old=g2d.getTransform();
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 	g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
 	g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 	g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 	g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
 
-	 if(state==StateOfGame.GameEndLost)
+	 if(MyPanel.getStateOfGame()==StateOfGame.GameEndLost)
 		{
-			mypanel.setRunning(false);
+		 MyPanel.setStateOfGame(StateOfGame.GameEndLost);
 			g2d.setColor(new Color(0,0,0,95));
 			g2d.fillRect(0, 0, 1000, 1000);
 		g2d.setFont(g2d.getFont().deriveFont(Font.BOLD,110f));
@@ -81,11 +85,11 @@ public KeyHandler kh;
 	        g2d.setColor(Color.WHITE);
 	        g2d.drawString(text, textX, textY);
 
-		}else if(state==StateOfGame.GameEndWin)
+		}else if(MyPanel.getStateOfGame()==StateOfGame.GameEndWin)
 		{
 			//mypanel.setRunning(false);
 			g2d.setColor(new Color(0,0,0,95));
-			g2d.fillRect(20, 20, 1000, 1000);
+			g2d.fillRect(0, 0, 1000, 1000);
 		g2d.setFont(g2d.getFont().deriveFont(Font.BOLD,110f));
 		String text="You Win !";
 		 int centerx=(850/4)-10;
@@ -96,18 +100,18 @@ public KeyHandler kh;
 	        g2d.setColor(Color.WHITE);
 	        g2d.drawString(text, textX, textY);
 
-		}else if(state==StateOfGame.GameIsRunning)
+		}else if(MyPanel.getStateOfGame()==StateOfGame.GameIsRunning)
 		{
 		String textScore="Score :"+player.getScore();
 		g2d.setColor(Color.WHITE);
 		g2d.setFont(new Font(textScore,1,32));
 		g2d.drawString(textScore,Font.ITALIC,650);
-		}else if(state==StateOfGame.GamePause)
+		}else if(MyPanel.getStateOfGame()==StateOfGame.GamePause)
 		{
 			//PAUSE
 			
 			g2d.setColor(new Color(0,0,0,95));
-			g2d.fillRect(100, 100, 600, 600);
+			g2d.fillRect(0, 0, 1000, 1000);
 			g2d.setFont(g2d.getFont().deriveFont(Font.BOLD,110f));
 			 String text="Pause";
 			 int centerx=(850/4)-10;
@@ -117,7 +121,7 @@ public KeyHandler kh;
 		        int textY = centery ;
 		        g2d.setColor(Color.WHITE);
 		        g2d.drawString(text, textX, textY+100);	
-		}else if(state==StateOfGame.GameStart)
+		}else if(MyPanel.getStateOfGame()==StateOfGame.GameStart)
 		   {
 			g2d.setPaint(new Color(0,0,0));
 			g2d.fillRect(0,0, 1000, 800);
@@ -132,10 +136,10 @@ public KeyHandler kh;
 			g2d.setPaint(Color.WHITE);
 			g2d.setFont(g2d.getFont().deriveFont(Font.BOLD,150f));
 			g2d.drawString(text, 165, 125);
-			g2d.drawImage(img1, 295, 230, player.getWdith()*6, player.getWdith()*6,null);
-			g2d.drawImage(img2, 405, 290, player.getWdith()*3, player.getWdith()*3,null);
-			g2d.drawImage(img2, 495, 290, player.getWdith()*3, player.getWdith()*3,null);
-			g2d.drawImage(img2, 595, 290, player.getWdith()*3, player.getWdith()*3,null);	
+			g2d.drawImage(img1, 295, 230, player.getWidth()*6, player.getWidth()*6,null);
+			g2d.drawImage(img2, 405, 290, player.getWidth()*3, player.getWidth()*3,null);
+			g2d.drawImage(img2, 495, 290, player.getWidth()*3, player.getWidth()*3,null);
+			g2d.drawImage(img2, 595, 290, player.getWidth()*3, player.getWidth()*3,null);	
 			
 			//MENU
 			
@@ -154,7 +158,7 @@ public KeyHandler kh;
 			g2d.setFont(g2d.getFont().deriveFont(Font.BOLD,50f));
 			g2d.drawString(">", 325, 595);	
 			}
-			
+			g2d.setTransform(old);
 	   	}
 	}
 	

@@ -3,6 +3,7 @@ package Entity;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.geom.AffineTransform;
 
 import javax.swing.ImageIcon;
 
@@ -96,7 +97,7 @@ private	int score;
 		}
 	}
 	public void draw(Graphics2D g2d)
-	{
+	{AffineTransform old=g2d.getTransform();
 		img=center;
         switch(direction)
         {
@@ -141,6 +142,8 @@ private	int score;
 			}
         }break;
         }
-		 g2d.drawImage(img, x, y,width,height, null);
+        g2d.translate(x, y);
+		g2d.drawImage(img, 0, 0,width,height, null);
+		g2d.setTransform(old);
 	}
 }

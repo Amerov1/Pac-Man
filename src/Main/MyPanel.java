@@ -3,8 +3,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
 import Entity.Cheese;
 import Block.Wall;
 import Entity.Ghost;
@@ -16,7 +19,6 @@ import Entity.Player;
 
 public class MyPanel extends JPanel implements Runnable{
 int FPS;
-public boolean running;	
 public	Thread gameThread;
 private Wall wall;
 private Player player1;
@@ -25,9 +27,9 @@ private Ghost ghost1;
 public char direction='r';
 private Cheese cheese;
 private GameState gs;
-public	MyPanel(int x,int y,int width,int height)
+private static StateOfGame SOG;
+	public	MyPanel(int x,int y,int width,int height)
 	{ 
-	  running=true;
 	    FPS=14;
 		setBackground(Color.BLACK);
 		setPreferredSize(new Dimension(width,height));
@@ -35,18 +37,22 @@ public	MyPanel(int x,int y,int width,int height)
 		kh=new KeyHandler();
         addKeyListener(kh);
 	    player1=new Player(kh,wall);
-	   
 	    cheese=new Cheese(wall,player1);
 	    gs=new GameState(player1,cheese,this,kh);
 	    ghost1=new Ghost(wall,player1,gs,this);
 	    setFocusable(true);
+	    SOG= StateOfGame.GameStart;
 	    startRunning();
-	   
+	    
 	}
-public void setRunning(boolean run)
-{
-	this.running=run;
-}
+	public static void setStateOfGame(StateOfGame s)
+	{
+	SOG=s;
+	}
+	public static StateOfGame getStateOfGame()
+	{
+		return SOG;
+	}
 	public void startRunning()
 	{
 		gameThread=new Thread(this);
@@ -60,32 +66,36 @@ public void setRunning(boolean run)
     {
     	return this.direction;
     }
-    
-	public void paint(Graphics g)
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
+        draw(g2d); // Call your draw method here
+    }
+
+    public void draw(Graphics2D g2d)
 	{
-		super.paint(g);
-		Graphics2D g2d= (Graphics2D) g;
+		AffineTransform old=g2d.getTransform();
 		
-		
-		if(gs.state != StateOfGame.GameStart)
+		if(SOG == StateOfGame.GameIsRunning)
 		{
 		cheese.draw(g2d);
 		wall.draw(g2d);
-       player1.draw(g2d);
-       ghost1.draw(g2d);
-       
+        player1.draw(g2d);
+        ghost1.draw(g2d);
 		}
 		gs.draw(g2d);
+		g2d.setTransform(old);
 	}
-	public  void update()
+	public void update()
 	{
 		gs.update();
-		
-		if(running)
+		System.out.println(SOG);
+		if(SOG==StateOfGame.GameIsRunning)
 		{
+	        cheese.update();
 			player1.update();
-        cheese.update();
-        ghost1.update();
+            ghost1.update();
 		}
 	}
 	@Override

@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
+import Entity.Entity;
+
 public class Wall {
 
     private ArrayList<Rectangle> block;
@@ -21,7 +23,7 @@ public class Wall {
         block.add(new Rectangle(100, 520, 30, 150));
         block.add(new Rectangle(100, 660, 760, 30));
         block.add(new Rectangle(850, 0, 30, 290));
-        block.add(new Rectangle(850, 380, 30, 310));//
+        block.add(new Rectangle(850, 380, 30, 310));
         block.add(new Rectangle(730, 280, 150, 30));
         block.add(new Rectangle(730, 370, 150, 30));
         block.add(new Rectangle(250, 450, 40, 150));
@@ -37,7 +39,19 @@ public class Wall {
         arr = block.toArray(arr);
         return arr;
     }
-
+    public boolean check(Entity entity)
+    {
+    	if(entity == null)
+    	{
+    		return false;
+    	}
+    	else
+    	{
+    	for(Rectangle r:block)
+    		return r.intersects(entity.getX(), entity.getY(), entity.getWidth(), entity.getHeight());
+    	}
+    	return false;
+    }
     public void draw(Graphics2D g2d) {
         for (Rectangle r : block) {
             g2d.setPaint(Color.BLACK);

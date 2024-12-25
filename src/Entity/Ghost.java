@@ -133,10 +133,10 @@ public void update()
 {
 	if(check(player))
 	{
-		gs.state=StateOfGame.GameEndLost;
+		MyPanel.setStateOfGame(StateOfGame.GameEndLost);
 		gs.b=false;
 	}
-	if(gs.state==StateOfGame.GameIsRunning)
+	if(MyPanel.getStateOfGame()==StateOfGame.GameIsRunning)
 	{switch(direction1)
 	{
 	case 'u':{
