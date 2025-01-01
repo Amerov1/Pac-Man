@@ -3,63 +3,79 @@ package Entity;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import Main.StateOfGame;
+
 public class KeyHandler implements KeyListener{
-	public boolean upPressed,downPressed,rightPressed,leftPressed,spacePressed,enterPressed;
-	@Override
-	public void keyPressed(KeyEvent arg0) {
-		
-		int code =arg0.getKeyCode();
-		switch(code)
-		{
-		case KeyEvent.VK_W:
-		{upPressed=true;}break;
-		case KeyEvent.VK_D:{
-			rightPressed=true;
-		}break;
-		case KeyEvent.VK_S:{
-			downPressed=true;
-		}break;
-		case KeyEvent.VK_A:{
-			leftPressed=true;
-		}break;
-		case KeyEvent.VK_SPACE:{
-			spacePressed=true;
-		}break;
-		case KeyEvent.VK_ENTER:{
-			enterPressed=true;
-		}break;
-		}
-		
+	public char direction= ' ',preDirection= ' ';
+	public boolean enterPressed=false,spacePressed=false;
+	private StateOfGame sog;
+	public void setSpacePressed(boolean spacePressed)
+	{
+		this.spacePressed=spacePressed;
 	}
+	public KeyHandler(StateOfGame _state)
+	{
+		sog=_state;
+	}
+	public StateOfGame getState()
+	{
+		return sog;
+	}
+	public char getPreDirection()
+	{
+		return preDirection;
+	}
+	public void setPreDirection(char d)
+	{
+		preDirection=d;
+	}
+	@Override
+	public void keyPressed(KeyEvent arg0) {}
 	@Override
 	public void keyReleased(KeyEvent arg0) {
 		int code =arg0.getKeyCode();
+		
 		switch(code)
 		{
 		case KeyEvent.VK_W:
-		{upPressed=false;}break;
+		{setDirection('U');}break;
 		case KeyEvent.VK_D:{
-			rightPressed=false;
+			setDirection('R');
 		}break;
 		case KeyEvent.VK_S:{
-			downPressed=false;
+			setDirection('D');
 		}break;
 		case KeyEvent.VK_A:{
-			leftPressed=false;
+			setDirection('L');
 		}break;
 		case KeyEvent.VK_ENTER:{
-			enterPressed=false;
+			if(sog==StateOfGame.GameStart)
+			enterPressed=!enterPressed;
 		}break;
 		case KeyEvent.VK_SPACE:{
-			spacePressed=false;
+			if(sog!=StateOfGame.GameStart)
+			spacePressed=!spacePressed;
 		}break;
+		default:
+		    break;
 		}
 		
 	}
-	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
+	public void setDirection(char d)
+	{
+		preDirection=direction;
+		direction=d;
+
 	}
+	public char getDirection()
+	{
+		return direction;
+	}
+	public void update(StateOfGame s)
+	{
+		sog=s;
+	}
+	@Override
+	public void keyTyped(KeyEvent arg0) {}
 
 }

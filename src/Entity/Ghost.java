@@ -9,6 +9,7 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
+import Block.Point;
 import Block.Rectangle;
 import Block.Wall;
 import Main.GameState;
@@ -16,11 +17,11 @@ import Main.MyPanel;
 import Main.StateOfGame;
 
 
-public class Ghost  implements ActionListener
+public class Ghost  
 {
-Wall wall;
 Image img1,img2,img3;
 Timer time;
+private Wall wall;
 int x1,y1,x2,y2,x3,y3;
 int speedx1,speedy1;
 int speedx2,speedy2;
@@ -34,44 +35,76 @@ char direction2;
 char direction3;
 GameState gs;
 MyPanel mypanel;
-public Ghost(Wall wall,Player player,GameState gs,MyPanel mypanel)
+public Ghost(Wall wall,Player player,GameState gs,MyPanel mypanel,int cellSize)
 {
+	this.wall=wall;
 	this.mypanel=mypanel;
 	this.gs=gs;
-	this.wall=wall;
-this.player=player;
+    this.player=player;
    direction1 ='u';
    direction2 ='l';
    direction3 ='d';
-	 x3=260;
-	y3=250;
-	 x1=100;
-	y1=40;
-	 x2=245;
-	y2=40;
-	width=32;
-	height=32;
-	speedx1=5;
-	speedy1=5;
-	speedx2=5;
-	speedy2=5;
-	speedx3=5;
-	speedy3=5;
-	img1= new ImageIcon("C:\\Users\\Alaa\\Desktop\\github\\PacmanNow\\src\\pacman\\ghost.png").getImage();
-	img2= new ImageIcon("C:\\Users\\Alaa\\Desktop\\github\\PacmanNow\\src\\pacman\\ghost2.png").getImage();
-	img3= new ImageIcon("C:\\Users\\Alaa\\Desktop\\github\\PacmanNow\\src\\pacman\\ghost3.png").getImage();
-}
 
+	width=cellSize;
+	height=cellSize;
+	speedx1=cellSize / 4;
+	speedy1=cellSize / 4;
+	speedx2=cellSize / 4;
+	speedy2=cellSize / 4;
+	speedx3=cellSize / 4;
+	speedy3=cellSize / 4;
+	img1= new ImageIcon("C:\\Users\\Alaa\\Desktop\\github\\PacmanNow\\src\\pacman\\orangeGhost.png").getImage();
+	img2= new ImageIcon("C:\\Users\\Alaa\\Desktop\\github\\PacmanNow\\src\\pacman\\pinkGhost.png").getImage();
+	img3= new ImageIcon("C:\\Users\\Alaa\\Desktop\\github\\PacmanNow\\src\\pacman\\blueGhost.png").getImage();
+	   createGhosts();
+}
+public void setDefault()
+{
+	direction1 ='u';
+	direction2 ='l';
+	direction3 ='d';
+	createGhosts();
+}
 public boolean check(Wall wall,int x , int y)
 {
 	for(Rectangle r : wall.getWall())
 	if(r!=null)
 	{
-        if (r != null && r.intersects(x, y, width, height)) {
+        if (r != null && r.intersects(x, y, width, height)) 
+        {
             return true;
         }
 	}
 	return false;
+}
+public void createGhosts()
+{
+	int count=1;
+    int[][] _map = wall.getMap();
+    for (int row = 0; row < _map.length; row++) {
+        for (int col = 0; col < _map[0].length; col++) {
+            if (_map[row][col] == 4) { // Nur Zellen mit "0" sind für Käse
+                int tx = col * width;  // Spalte -> Pixel-X
+                int ty = row * height; // Zeile -> Pixel-Y
+                        // Käseposition in Pixeln speichern
+                if(count==1)
+                {
+                	x1=tx;
+                	y1=ty;
+                	count++;
+                }else if(count==2)
+                {
+                	x2=tx;
+                	y2=ty;
+                	count++;
+                }else{
+                	x3=tx;
+                	y3=ty;
+                	count++;
+                }
+            }
+        }
+    }
 }
 public void setActions()
 {
@@ -119,13 +152,10 @@ public void draw(Graphics2D g2d)
 	g2d.drawImage(img3,x3,y3,width,height,null);
 }
 public boolean check(Entity e1) {
-    if (this != null && e1 != null) {
     	 /* return (x < otherX + otherWidth &&x + width > otherX &&y < otherY + otherHeight &&y + height > otherY)*/
         return (x1 < e1.x + e1.width && x1 + width > e1.x && y1 < e1.y + e1.height && y1 + height > e1.y
                 || x2 < e1.x + e1.width && x2 + width > e1.x && y2 < e1.y + e1.height && y2 + height > e1.y
                 || x3 < e1.x + e1.width && x3 + width > e1.x && y3 < e1.y + e1.height && y3 + height > e1.y);
-    }
-    return false;
 }
 
 
@@ -133,8 +163,11 @@ public void update()
 {
 	if(check(player))
 	{
+		player.lives.remove(player.lives.size()-1);
+		player.createPlayer();
+		this.setDefault();
+		if(player.lives.size()==0)
 		MyPanel.setStateOfGame(StateOfGame.GameEndLost);
-		gs.b=false;
 	}
 	if(MyPanel.getStateOfGame()==StateOfGame.GameIsRunning)
 	{switch(direction1)
@@ -150,7 +183,7 @@ public void update()
 	}break;
 	case 'r':{
 		x1+=speedx1;
-		if(check(wall,x1,y1))
+	//	if(check(wall,x1,y1))
 		{x1-=speedx1;
 			whichOne=1;
 			setActions();
@@ -251,11 +284,5 @@ public void update()
 	
 	}
 	}
-}
-
-@Override
-public void actionPerformed(ActionEvent arg0) {
-	// TODO Auto-generated method stub
-
 }
 }

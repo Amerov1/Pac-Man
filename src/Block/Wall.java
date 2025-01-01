@@ -2,38 +2,72 @@ package Block;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.util.ArrayList;
+
+import javax.swing.ImageIcon;
 
 import Entity.Entity;
 
 public class Wall {
 
     private ArrayList<Rectangle> block;
-
-    public Wall() {
-        block = new ArrayList<Rectangle>(14);
-        block.add(new Rectangle(10, 0, 850, 30));
-        block.add(new Rectangle(10, 20, 30, 150));
-        block.add(new Rectangle(10, 150, 100, 30));
-        block.add(new Rectangle(100, 150, 30, 150));
-        block.add(new Rectangle(10, 280, 120, 30));
-        block.add(new Rectangle(10, 380, 120, 30));
-        block.add(new Rectangle(10, 400, 30, 150));
-        block.add(new Rectangle(10, 520, 100, 30));
-        block.add(new Rectangle(100, 520, 30, 150));
-        block.add(new Rectangle(100, 660, 760, 30));
-        block.add(new Rectangle(850, 0, 30, 290));
-        block.add(new Rectangle(850, 380, 30, 310));
-        block.add(new Rectangle(730, 280, 150, 30));
-        block.add(new Rectangle(730, 370, 150, 30));
-        block.add(new Rectangle(250, 450, 40, 150));
-        block.add(new Rectangle(280, 100, 320, 40));
-        block.add(new Rectangle(600, 450, 40, 150));
-        block.add(new Rectangle(250, 450, 390, 40));
-        block.add(new Rectangle(420, 180, 40, 220));
-        block.add(new Rectangle(320, 260, 250, 40));
+    private int[][] map;
+    private  int cellWidth;
+    private int cellHeight;
+    private Image imgWall;
+    public int[][] getMap()
+    {
+    	return map;
     }
-
+    public Wall(int cellSize) {
+    	imgWall = new ImageIcon("C:\\Users\\Alaa\\Desktop\\github\\PacmanNow\\src\\pacman\\wall.png").getImage();
+    	createMap();
+    	cellWidth=cellSize;
+    	cellHeight=cellSize;
+        block = new ArrayList<Rectangle>();
+        initWall();
+    }
+    public int getMapWidth()
+    {
+    	return map[0].length;
+    }
+    public int getMapHeight()
+    {
+    	return map.length;
+    }
+	public void createMap()
+	{
+        map=new int[][]{
+        		
+        		{0,0,0,0,0,0,0,0,0,0,0},
+        		{1,1,1,1,1,1,1,1,1,1,1},
+        		{1,3,3,3,3,3,3,3,3,3,1},
+        		{1,3,3,3,4,3,3,3,3,3,1},
+        		{1,3,3,1,3,3,3,1,3,4,1},
+        		{1,3,3,1,1,1,1,1,3,3,1},
+        		{1,3,3,3,3,3,3,3,3,3,1},
+        		{0,3,2,3,3,1,3,3,3,3,0},
+        		{1,3,3,3,1,1,1,0,0,0,1},
+        		{1,3,3,3,3,1,3,3,3,4,1},
+        		{1,3,3,3,3,3,3,3,3,3,1},
+        		{1,1,1,1,1,1,1,1,1,1,1}
+        		
+            };
+	}
+	public void initWall()
+	{
+		for(int row=0;row<getMapHeight();row++)
+		{
+			for(int col=0;col<getMapWidth();col++)
+			{
+				if(map[row][col]==1)
+				{
+					block.add(new Rectangle(col*cellWidth,row*cellHeight,cellWidth,cellHeight));
+				}
+			}
+		}
+	}
     public Rectangle[] getWall() {
         Rectangle arr[] = new Rectangle[block.size()];
         arr = block.toArray(arr);
@@ -54,10 +88,9 @@ public class Wall {
     }
     public void draw(Graphics2D g2d) {
         for (Rectangle r : block) {
-            g2d.setPaint(Color.BLACK);
-            g2d.drawRoundRect(r.getX(), r.getY(), r.getWidth(), r.getHeight(), 20, 20);
-            g2d.setPaint(Color.BLUE);
-            g2d.fillRoundRect(r.getX(), r.getY(), r.getWidth(), r.getHeight(), 10, 10);
+            g2d.drawImage(imgWall, r.getX(), r.getY(), r.getWidth(), r.getHeight(), null);
+    //        g2d.setColor(Color.RED);
+    //        g2d.drawRect(r.getX(), r.getY(), r.getWidth(), r.getHeight()); // Zeichne die Umrandung der Rechtecke
         }
     }
 }

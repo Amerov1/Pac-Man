@@ -48,10 +48,13 @@ public void setHeight(int h)
 {
 	height=h;
 }
-    public boolean check(Wall wall, Entity e) {
+    public boolean check(Wall wall,Entity e) {
+    	boolean bb=false;
         for (Rectangle r : wall.getWall()) {
-                if (r.intersects(e.x, e.y, e.width, e.height)) //we put extra width and height because they are tiny comared to the wall
-                {//some of them are under the wall
+        	bb=r.intersects(e.getX(), e.getY(), e.getWidth(), e.getHeight());
+        	
+                if (bb) //we put extra width and height because they are tiny comared to the wall
+                {
                     return true;
                 }
             

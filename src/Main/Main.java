@@ -1,9 +1,9 @@
 package Main;
 
-public class Pacman {
+public class Main {
 
     public static void main(String args[]) {
 
-        new Drawing();
+        new PacMan();
     }
 }
