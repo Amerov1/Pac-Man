@@ -19,13 +19,13 @@ public class Cheese extends Entity {
 
 	
     private Image img;
-    Player player;
-    public List<Point> shapes;
+    private Player player;
+    private List<Point> shapes;
     private Wall wall;
     public Cheese(Wall wall,Player player,int cellSize) {
     	this.wall=wall;
         height=cellSize;
-       width= cellSize;
+        width= cellSize;
         this.player = player;
         img = new ImageIcon("C:\\Users\\Alaa\\Desktop\\github\\PacmanNow\\src\\pacman\\cheese.png").getImage();
         shapes = new ArrayList<Point>();
@@ -64,6 +64,10 @@ public class Cheese extends Entity {
         }).collect(Collectors.toList());
     }
 
+    public int getShapesSize()
+    {
+    	return shapes.size();
+    }
 
     public void update() {
         check();

@@ -18,19 +18,20 @@ import Main.StateOfGame;
 public class Player extends Entity{
 
 	
-private	Image img,center,up,down,left,right;
-	KeyHandler kh;
-	int countNum;
-	int chooseIm;
-	int live;
+	private	Image img,center,up,down,left,right;
+	private KeyHandler kh;
+	private int countNum;
+	private int chooseIm;
+	private int live;
 	private Wall wall;
-	char direction;
-	char oldDirection ;
-private	int velocity;
-private	int score;
-private	int velocityX;
-private	int velocityy;
-public List<Rectangle> lives;
+	private char direction;
+	private char oldDirection ;
+	private	int velocity;
+	private	int score;
+	private	int velocityX;
+	private	int velocityy;
+	private List<Rectangle> lives;
+	
 	public Player(KeyHandler kh,int cellSize)
 	{direction=' ';
 		oldDirection = 'n';
@@ -78,6 +79,14 @@ public List<Rectangle> lives;
 			}
 		}
 	}
+	public int getLivesNumber()
+	{
+		return lives.size();
+	}
+	public void removeLive()
+	{
+		lives.remove(lives.size()-1);
+	}
 	public void increaseScore()
 	{
 		score++;
@@ -116,7 +125,7 @@ public List<Rectangle> lives;
 	}
 	public void updateVelocity()
 	{
-	if(kh.getState()==StateOfGame.GameIsRunning)
+	if(kh.getState()==StateOfGame.Is_Running)
 	{
 		if(kh.getDirection()=='D')
 		{

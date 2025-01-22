@@ -6,16 +6,24 @@ import java.awt.event.KeyListener;
 import Main.StateOfGame;
 
 public class KeyHandler implements KeyListener{
-	public char direction= ' ',preDirection= ' ';
-	public boolean enterPressed=false,spacePressed=false;
+	private char direction= ' ',preDirection= ' ';
+	private boolean enterPressed=false,spacePressed=false;
 	private StateOfGame sog;
 	public void setSpacePressed(boolean spacePressed)
 	{
 		this.spacePressed=spacePressed;
 	}
-	public KeyHandler(StateOfGame _state)
+	public KeyHandler(StateOfGame state)
 	{
-		sog=_state;
+		sog=state;
+	}
+	public boolean getEnterPressed()
+	{
+		return enterPressed;
+	}
+	public boolean getSpacePressed()
+	{
+		return spacePressed;
 	}
 	public StateOfGame getState()
 	{
@@ -49,11 +57,11 @@ public class KeyHandler implements KeyListener{
 			setDirection('L');
 		}break;
 		case KeyEvent.VK_ENTER:{
-			if(sog==StateOfGame.GameStart)
+			if(sog==StateOfGame.Start)
 			enterPressed=!enterPressed;
 		}break;
 		case KeyEvent.VK_SPACE:{
-			if(sog!=StateOfGame.GameStart)
+			if(sog!=StateOfGame.Start)
 			spacePressed=!spacePressed;
 		}break;
 		default:

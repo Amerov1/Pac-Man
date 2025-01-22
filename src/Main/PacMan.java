@@ -11,11 +11,12 @@ import Block.Wall;
 
 public class PacMan extends JFrame {
 
-    final int xPanel = 0;
-    final int yPanel = 0;
-    int tileSize=32;
-    final int widthPanel = tileSize*11;
-    final int heightPanel = tileSize*12;
+	private final int xPanel = 0;
+	private final int yPanel = 0;
+	private final int tileSize=32;
+	private final int widthPanel = tileSize*11;
+	private final int heightPanel = tileSize*12;
+	
     MyPanel mypanel;
 
     PacMan() {

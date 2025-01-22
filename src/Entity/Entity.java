@@ -55,10 +55,10 @@ public void setHeight(int h)
         	
                 if (bb) //we put extra width and height because they are tiny comared to the wall
                 {
-                    return true;
+                    return bb;
                 }
             
         }
-        return false;
+        return bb;
     }
 }

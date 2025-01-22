@@ -15,54 +15,55 @@ import Entity.Player;
 
 public class GameState {
 
-	Player player;
-	Cheese cheese;
-   MyPanel mypanel;
-   public int select;
-   public boolean b;
+   private Player player;
+   private Cheese cheese;
+   private MyPanel myPanel;
+   private int select;
+   private boolean b;
    private int cellSize;
-   public KeyHandler kh;
+   private KeyHandler kh;
+   
 	public GameState(Player player,Cheese cheese,MyPanel mypanel, KeyHandler kh)
-	{  cellSize=32;
+	{   cellSize=32;
 		select=0;
-		MyPanel.setStateOfGame(StateOfGame.GameStart);
+		MyPanel.setStateOfGame(StateOfGame.Start);
 		this.kh=kh;
 		this.player=player;
 		this.cheese=cheese;
-		this.mypanel=mypanel;
+		this.myPanel=mypanel;
 
 	}
 	public void update()
 	{
-		if(StateOfGame.GameStart== MyPanel.getStateOfGame() &&kh.getDirection()=='D' && select==0)
+		if(StateOfGame.Start== MyPanel.getStateOfGame() &&kh.getDirection()=='D' && select==0)
 		{
 			select=1;
-		}else if(StateOfGame.GameStart== MyPanel.getStateOfGame() &&kh.getDirection()=='U' && select==1)
+		}else if(StateOfGame.Start== MyPanel.getStateOfGame() &&kh.getDirection()=='U' && select==1)
 		{
 			select=0;
 		}
 		
-		if(StateOfGame.GameStart== MyPanel.getStateOfGame() &&select==0&&kh.enterPressed)
+		if(StateOfGame.Start== MyPanel.getStateOfGame() &&select==0&&kh.getEnterPressed())
 		{
 			kh.setDirection(' ');
-			MyPanel.setStateOfGame(StateOfGame.GameIsRunning);
+			MyPanel.setStateOfGame(StateOfGame.Is_Running);
 			
-		}else if(StateOfGame.GameStart== MyPanel.getStateOfGame() &&select==1&&kh.enterPressed)
+		}else if(StateOfGame.Start== MyPanel.getStateOfGame() &&select==1&&kh.getEnterPressed())
 		{
 			System.exit(0);
 			
 		}
 		
-		if(StateOfGame.GameIsRunning== MyPanel.getStateOfGame() &&0==cheese.shapes.size())//Here is the issue
+		if(StateOfGame.Is_Running== MyPanel.getStateOfGame() &&0==cheese.getShapesSize())//Here is the issue
 		{
-			MyPanel.setStateOfGame(StateOfGame.GameEndWin);
+			MyPanel.setStateOfGame(StateOfGame.End_Win);
 			//b=false;//just one time per game
-		}else if(MyPanel.getStateOfGame()==StateOfGame.GameIsRunning &&kh.spacePressed)
+		}else if(MyPanel.getStateOfGame()==StateOfGame.Is_Running &&kh.getSpacePressed())
 		{
-			MyPanel.setStateOfGame(StateOfGame.GamePause);
-		}else if(MyPanel.getStateOfGame()==StateOfGame.GamePause &&!kh.spacePressed)
+			MyPanel.setStateOfGame(StateOfGame.Pause);
+		}else if(MyPanel.getStateOfGame()==StateOfGame.Pause &&!kh.getSpacePressed())
 		{
-			MyPanel.setStateOfGame(StateOfGame.GameIsRunning);
+			MyPanel.setStateOfGame(StateOfGame.Is_Running);
 		}
 	}
 	public void draw(Graphics2D g2d)
@@ -77,8 +78,8 @@ public class GameState {
 	g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
 
 		switch(MyPanel.getStateOfGame())
-		{case GameEndLost :
-			 MyPanel.setStateOfGame(StateOfGame.GameEndLost);
+		{case End_Lost :
+			 MyPanel.setStateOfGame(StateOfGame.End_Lost);
 				g2d.setColor(new Color(0,0,0,125));
 				g2d.fillRect(0, 0, cellSize*11, cellSize*11);
 				text="Game Over";
@@ -87,31 +88,31 @@ public class GameState {
 			    g2d.setColor(Color.WHITE);
 			    g2d.drawString(text,3*cellSize, 3*cellSize);
 	   break;
-		case GameEndWin :
+		case End_Win :
 			g2d.setColor(new Color(0,0,0,125));
 			g2d.fillRect(0, 0, 32*11, 32*11);
 			 text="You Win";
-			 f=new Font(text,Font.BOLD,mypanel.getPanelWidth()/10);
+			 f=new Font(text,Font.BOLD,myPanel.getPanelWidth()/10);
 			g2d.setFont(f);
 		    g2d.setColor(Color.WHITE);
 		    g2d.drawString(text,3*32, 3*32);	
 		    break;
-		case GameIsRunning :
+		case Is_Running :
 		String textScore="Score :"+player.getScore();
 		g2d.setColor(Color.WHITE);
 		g2d.setFont(new Font(textScore,1,32));
 		g2d.drawString(textScore,Font.ITALIC,650);
 		break;
-		case GamePause :
+		case Pause :
 			g2d.setColor(new Color(0,0,0,125));
 			g2d.fillRect(0, 0, 32*11, 32*11);
 			 text="Pause";
-			 f=new Font(text,Font.BOLD,mypanel.getPanelWidth()/10);
+			 f=new Font(text,Font.BOLD,myPanel.getPanelWidth()/10);
 			g2d.setFont(f);
 		    g2d.setColor(Color.WHITE);
 		    g2d.drawString(text,4*32, 3*32);	
 		    break;
-		case GameStart :
+		case Start :
 			g2d.setPaint(new Color(0,0,0));
 			g2d.fillRect(0,0, 1000, 800);
 			Image img1=new ImageIcon("C:\\Users\\Alaa\\Desktop\\github\\PacmanNow\\src\\pacman\\imagesnew.png").getImage();
@@ -131,7 +132,7 @@ public class GameState {
 			
 			g2d.setFont(g2d.getFont().deriveFont(Font.BOLD,50f));
 			text="Start Playing";
-			 f=new Font(text,Font.BOLD,mypanel.getPanelWidth()/10);
+			 f=new Font(text,Font.BOLD,myPanel.getPanelWidth()/10);
 			g2d.setFont(f);
 		        g2d.setColor(Color.WHITE);
 		        g2d.drawString(text,2*cellSize, 7*cellSize);			

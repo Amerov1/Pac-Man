@@ -24,17 +24,18 @@ import Entity.Player;
 
 public class MyPanel extends JPanel implements ActionListener{
 	
-private Player player1;
-private KeyHandler 	kh;
-private Ghost ghost1;
-public char direction='r';
-private Cheese cheese;
-private GameState gs;
-private Wall wall;
-private Timer gameLoop;
-private static StateOfGame SOG;
-private int panelWidth;
-private int panelHeight;
+	private Player player1;
+	private KeyHandler 	kh;
+	private Ghost ghost1;
+	private char direction='r';
+	private Cheese cheese;
+	private GameState gs;
+	private Wall wall;
+	private Timer gameLoop;
+	private static StateOfGame SOG;
+	private int panelWidth;
+	private int panelHeight;
+	
 	public	MyPanel(int x,int y,int width,int height,int cellSize)
 	{ 
 		setBackground(Color.BLACK);
@@ -42,7 +43,7 @@ private int panelHeight;
 		panelHeight=height;
 		setPreferredSize(new Dimension(width,panelHeight));
 		wall=new Wall(cellSize);
-		 SOG= StateOfGame.GameStart;
+		 SOG= StateOfGame.Start;
 		kh=new KeyHandler(SOG);
   	    player1=new Player(kh,cellSize);
         addKeyListener(kh);
@@ -98,7 +99,7 @@ private int panelHeight;
 		AffineTransform old=g2d.getTransform();
 		
 		
-		if(SOG == StateOfGame.GameIsRunning)
+		if(SOG == StateOfGame.Is_Running)
 		{
 		wall.draw(g2d);
 		cheese.draw(g2d);
@@ -114,16 +115,16 @@ private int panelHeight;
 		gs.update();
 		
 		//System.out.println(SOG);
-		if(SOG==StateOfGame.GameIsRunning)
+		if(SOG==StateOfGame.Is_Running)
 		{
 	        cheese.update();
 			player1.update();
             ghost1.update();
 		}
-		if((SOG==StateOfGame.GameEndLost||
-			SOG==StateOfGame.GameEndWin) &&kh.spacePressed)
+		if((SOG==StateOfGame.End_Lost||
+			SOG==StateOfGame.End_Win) &&kh.getSpacePressed())
 		{
-			SOG=StateOfGame.GameIsRunning;
+			SOG=StateOfGame.Is_Running;
 			setDefault();
 			kh.setDirection(' ');
 			kh.setSpacePressed(false);

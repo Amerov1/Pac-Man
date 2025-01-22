@@ -23,9 +23,9 @@ Image img1,img2,img3;
 Timer time;
 private Wall wall;
 int x1,y1,x2,y2,x3,y3;
-int speedx1,speedy1;
-int speedx2,speedy2;
-int speedx3,speedy3;
+int speedX1,speedY1;
+int speedX2,speedY2;
+int speedX3,speedY3;
 int width;
 int height;
 Player player;
@@ -47,12 +47,12 @@ public Ghost(Wall wall,Player player,GameState gs,MyPanel mypanel,int cellSize)
 
 	width=cellSize;
 	height=cellSize;
-	speedx1=cellSize / 4;
-	speedy1=cellSize / 4;
-	speedx2=cellSize / 4;
-	speedy2=cellSize / 4;
-	speedx3=cellSize / 4;
-	speedy3=cellSize / 4;
+	speedX1=cellSize / 4;
+	speedY1=cellSize / 4;
+	speedX2=cellSize / 4;
+	speedY2=cellSize / 4;
+	speedX3=cellSize / 4;
+	speedY3=cellSize / 4;
 	img1= new ImageIcon("C:\\Users\\Alaa\\Desktop\\github\\PacmanNow\\src\\pacman\\orangeGhost.png").getImage();
 	img2= new ImageIcon("C:\\Users\\Alaa\\Desktop\\github\\PacmanNow\\src\\pacman\\pinkGhost.png").getImage();
 	img3= new ImageIcon("C:\\Users\\Alaa\\Desktop\\github\\PacmanNow\\src\\pacman\\blueGhost.png").getImage();
@@ -163,45 +163,45 @@ public void update()
 {
 	if(check(player))
 	{
-		player.lives.remove(player.lives.size()-1);
+		player.removeLive();
 		player.createPlayer();
 		this.setDefault();
-		if(player.lives.size()==0)
-		MyPanel.setStateOfGame(StateOfGame.GameEndLost);
+		if(player.getLivesNumber()==0)
+		MyPanel.setStateOfGame(StateOfGame.End_Lost);
 	}
-	if(MyPanel.getStateOfGame()==StateOfGame.GameIsRunning)
+	if(MyPanel.getStateOfGame()==StateOfGame.Is_Running)
 	{switch(direction1)
 	{
 	case 'u':{
-            y1-=speedy1;
+            y1-=speedY1;
 		if(check(wall,x1,y1))
-		{y1+=speedy1;
+		{y1+=speedY1;
 			whichOne=1;
 			setActions();
 		}
 		
 	}break;
 	case 'r':{
-		x1+=speedx1;
+		x1+=speedX1;
 	//	if(check(wall,x1,y1))
-		{x1-=speedx1;
+		{x1-=speedX1;
 			whichOne=1;
 			setActions();
 		}
 	}break;
 	case 'l':{
-		x1-=speedx1;
+		x1-=speedX1;
 		if(check(wall,x1,y1))
-		{x1+=speedx1;
+		{x1+=speedX1;
 			whichOne=1;
 			setActions();
 		}
 	}break;
 	case 'd':{
-		y1+=speedy1;
+		y1+=speedY1;
 		if(check(wall,x1,y1))
 		{
-			y1-=speedy1;
+			y1-=speedY1;
 			whichOne=1;
 			setActions();
 		}
@@ -211,34 +211,34 @@ public void update()
 	switch(direction2)
 	{
 	case 'u':{
-            y2-=speedy2;
+            y2-=speedY2;
 		if(check(wall,x2,y2))
-		{y2+=speedy2;
+		{y2+=speedY2;
 			whichOne=2;
 			setActions();
 		}
 		
 	}break;
 	case 'r':{
-		x2+=speedx2;
+		x2+=speedX2;
 		if(check(wall,x2,y2))
-		{x2-=speedx2;
+		{x2-=speedX2;
 			whichOne=2;
 			setActions();
 		}
 	}break;
 	case 'l':{
-		x2-=speedx2;
+		x2-=speedX2;
 		if(check(wall,x2,y2))
-		{x2+=speedx2;
+		{x2+=speedX2;
 			whichOne=2;
 			setActions();
 		}
 	}break;
 	case 'd':{
-		y2+=speedy2;
+		y2+=speedY2;
 		if(check(wall,x2,y2))
-		{y2-=speedy2;
+		{y2-=speedY2;
 			whichOne=2;
 			setActions();
 		}
@@ -249,34 +249,34 @@ public void update()
 	switch(direction3)
 	{
 	case 'u':{
-            y3-=speedy3;
+            y3-=speedY3;
 		if(check(wall,x3,y3))
-		{y3+=speedy3;
+		{y3+=speedY3;
 			whichOne=3;
 			setActions();
 		}
 		
 	}break;
 	case 'r':{
-		x3+=speedx3;
+		x3+=speedX3;
 		if(check(wall,x3,y3))
-		{x3-=speedy3;
+		{x3-=speedY3;
 			whichOne=3;
 			setActions();
 		}
 	}break;
 	case 'l':{
-		x3-=speedx3;
+		x3-=speedX3;
 		if(check(wall,x3,y3))
-		{x3+=speedy3;
+		{x3+=speedY3;
 			whichOne=3;
 			setActions();
 		}
 	}break;
 	case 'd':{
-		y3+=speedy3;
+		y3+=speedY3;
 		if(check(wall,x3,y3))
-		{y3-=speedy3;
+		{y3-=speedY3;
 			whichOne=3;
 			setActions();
 		}
