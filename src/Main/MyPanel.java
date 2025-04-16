@@ -6,14 +6,11 @@ import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Area;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import Entity.Cheese;
-import Block.Rectangle;
 import Block.Wall;
 import Entity.Ghost;
 import Entity.KeyHandler;

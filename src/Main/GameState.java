@@ -19,7 +19,6 @@ public class GameState {
    private Cheese cheese;
    private MyPanel myPanel;
    private int select;
-   private boolean b;
    private int cellSize;
    private KeyHandler kh;
    
@@ -115,8 +114,8 @@ public class GameState {
 		case Start :
 			g2d.setPaint(new Color(0,0,0));
 			g2d.fillRect(0,0, 1000, 800);
-			Image img1=new ImageIcon("C:\\Users\\Alaa\\Desktop\\github\\PacmanNow\\src\\pacman\\imagesnew.png").getImage();
-			Image img2=new ImageIcon("C:\\Users\\Alaa\\Desktop\\github\\PacmanNow\\src\\pacman\\cheese.png").getImage();
+			Image img1=new ImageIcon("C:\\Users\\Alaa\\Desktop\\github\\Pac-man\\PacmanNow\\src\\pacman\\imagesnew.png").getImage();
+			Image img2=new ImageIcon("C:\\Users\\Alaa\\Desktop\\github\\Pac-man\\PacmanNow\\src\\pacman\\cheese.png").getImage();
 			 text="PecMan";
 			g2d.setFont(g2d.getFont().deriveFont(Font.BOLD,2*cellSize));
 			g2d.setPaint(Color.GRAY);

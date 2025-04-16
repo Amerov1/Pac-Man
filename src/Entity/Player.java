@@ -1,16 +1,12 @@
 package Entity;
 
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Area;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.ImageIcon;
-
 import Block.Rectangle;
 import Block.Wall;
 import Main.StateOfGame;
@@ -22,10 +18,7 @@ public class Player extends Entity{
 	private KeyHandler kh;
 	private int countNum;
 	private int chooseIm;
-	private int live;
 	private Wall wall;
-	private char direction;
-	private char oldDirection ;
 	private	int velocity;
 	private	int score;
 	private	int velocityX;
@@ -33,8 +26,7 @@ public class Player extends Entity{
 	private List<Rectangle> lives;
 	
 	public Player(KeyHandler kh,int cellSize)
-	{direction=' ';
-		oldDirection = 'n';
+	{
 	lives=new ArrayList<Rectangle>();
 	lives.add(new Rectangle(0,0,32,32));
 	lives.add(new Rectangle(32,0,32,32));
@@ -47,11 +39,11 @@ public class Player extends Entity{
 		width=cellSize;
 		height=cellSize;
 		velocity = cellSize/4;
-	    center = new ImageIcon("C:\\Users\\Alaa\\Desktop\\github\\PacmanNow\\src\\pacman\\new.png").getImage();
-	    up= new ImageIcon("C:\\Users\\Alaa\\Desktop\\github\\PacmanNow\\src\\pacman\\up.png").getImage();
-	    down= new ImageIcon("C:\\Users\\Alaa\\Desktop\\github\\PacmanNow\\src\\pacman\\down.png").getImage();
-	    right= new ImageIcon("C:\\Users\\Alaa\\Desktop\\github\\PacmanNow\\src\\pacman\\right.png").getImage();
-	    left = new ImageIcon("C:\\Users\\Alaa\\Desktop\\github\\PacmanNow\\src\\pacman\\left.png").getImage();
+	    center = new ImageIcon(getClass().getResource("/pacman/new.png")).getImage();
+	    up= new ImageIcon(getClass().getResource("/pacman/up.png")).getImage();
+	    down= new ImageIcon(getClass().getResource("/pacman/down.png")).getImage();
+	    right= new ImageIcon(getClass().getResource("/pacman/right.png")).getImage();
+	    left = new ImageIcon(getClass().getResource("/pacman/left.png")).getImage();
 	    img=center;
 	    this.kh=kh;
 	    createPlayer();

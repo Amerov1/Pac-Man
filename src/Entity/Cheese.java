@@ -2,17 +2,11 @@ package Entity;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
-
 import javax.swing.ImageIcon;
-
 import Block.Point;
-import Block.Rectangle;
 import Block.Wall;
 
 public class Cheese extends Entity {
@@ -27,7 +21,7 @@ public class Cheese extends Entity {
         height=cellSize;
         width= cellSize;
         this.player = player;
-        img = new ImageIcon("C:\\Users\\Alaa\\Desktop\\github\\PacmanNow\\src\\pacman\\cheese.png").getImage();
+        img = new ImageIcon(getClass().getResource("/pacman/cheese.png")).getImage();
         shapes = new ArrayList<Point>();
         CreateCheese();
     }
@@ -39,10 +33,10 @@ public class Cheese extends Entity {
         int[][] _map = wall.getMap();
         for (int row = 0; row < _map.length; row++) {
             for (int col = 0; col < _map[0].length; col++) {
-                if (_map[row][col] == 3) { // Nur Zellen mit "0" sind für Käse
+                if (_map[row][col] == 3) { // Nur Zellen mit "0" sind fï¿½r Kï¿½se
                     int x = col * width;  // Spalte -> Pixel-X
                     int y = row * height; // Zeile -> Pixel-Y
-                    shapes.add(new Point(x, y));        // Käseposition in Pixeln speichern
+                    shapes.add(new Point(x, y));        // Kï¿½seposition in Pixeln speichern
                 }
             }
         }
@@ -50,14 +44,14 @@ public class Cheese extends Entity {
 
     public void check() {
         shapes = shapes.stream().filter(i -> {
-            // Überprüfe, ob `x` mit dem Spieler überlappt
+            // ï¿½berprï¿½fe, ob `x` mit dem Spieler ï¿½berlappt
             boolean isOverlapping = 
             		(i.getX() < player.getX() + player.getWidth()
                             && i.getX() + this.width > player.getX()
                             && i.getY() < player.getY() + player.getHeight()
                             && i.getY() + this.height > player.getY());
             if (isOverlapping) {
-                player.increaseScore(); // Punkte erhöhen, wenn Überlappung erkannt wird
+                player.increaseScore(); // Punkte erhï¿½hen, wenn ï¿½berlappung erkannt wird
                 return false; // Entferne das Shape, da es getroffen wurde
             }
             return true; // Behalte das Shape in der Liste

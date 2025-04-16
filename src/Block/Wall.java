@@ -1,12 +1,10 @@
 package Block;
 
-import java.awt.Color;
+
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
-
 import Entity.Entity;
 
 public class Wall {
@@ -21,7 +19,7 @@ public class Wall {
     	return map;
     }
     public Wall(int cellSize) {
-    	imgWall = new ImageIcon("C:\\Users\\Alaa\\Desktop\\github\\PacmanNow\\src\\pacman\\wall.png").getImage();
+    	imgWall = new ImageIcon(getClass().getResource("/pacman/wall.png")).getImage();
     	createMap();
     	cellWidth=cellSize;
     	cellHeight=cellSize;

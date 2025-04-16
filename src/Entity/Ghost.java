@@ -2,14 +2,9 @@ package Entity;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Random;
-
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
-
-import Block.Point;
 import Block.Rectangle;
 import Block.Wall;
 import Main.GameState;
@@ -53,9 +48,9 @@ public Ghost(Wall wall,Player player,GameState gs,MyPanel mypanel,int cellSize)
 	speedY2=cellSize / 4;
 	speedX3=cellSize / 4;
 	speedY3=cellSize / 4;
-	img1= new ImageIcon("C:\\Users\\Alaa\\Desktop\\github\\PacmanNow\\src\\pacman\\orangeGhost.png").getImage();
-	img2= new ImageIcon("C:\\Users\\Alaa\\Desktop\\github\\PacmanNow\\src\\pacman\\pinkGhost.png").getImage();
-	img3= new ImageIcon("C:\\Users\\Alaa\\Desktop\\github\\PacmanNow\\src\\pacman\\blueGhost.png").getImage();
+	img1= new ImageIcon(getClass().getResource("/pacman/orangeGhost.png")).getImage();
+	img2= new ImageIcon(getClass().getResource("/pacman/pinkGhost.png")).getImage();
+	img3= new ImageIcon(getClass().getResource("/pacman/blueGhost.png")).getImage();
 	   createGhosts();
 }
 public void setDefault()
@@ -83,10 +78,10 @@ public void createGhosts()
     int[][] _map = wall.getMap();
     for (int row = 0; row < _map.length; row++) {
         for (int col = 0; col < _map[0].length; col++) {
-            if (_map[row][col] == 4) { // Nur Zellen mit "0" sind für Käse
+            if (_map[row][col] == 4) { // Nur Zellen mit "0" sind fï¿½r Kï¿½se
                 int tx = col * width;  // Spalte -> Pixel-X
                 int ty = row * height; // Zeile -> Pixel-Y
-                        // Käseposition in Pixeln speichern
+                        // Kï¿½seposition in Pixeln speichern
                 if(count==1)
                 {
                 	x1=tx;
