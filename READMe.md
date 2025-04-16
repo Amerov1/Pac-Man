@@ -26,7 +26,7 @@ Das Spiel wurde mit Java Swing entwickelt.
 ## 🎮 Screenshots
 
 ### Spielstart
-<img src="src/pacman/Start.png" alt="Startscreen" width="300"/>
+<img src="src/pacman/start.png" alt="Startscreen" width="300"/>
 
 ### Während des Spiels
 <img src="src/pacman/playing.png" alt="Gameplay" width="300"/>
