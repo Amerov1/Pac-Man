@@ -13,7 +13,7 @@ public class PacMan extends JFrame {
     MyPanel mypanel;
 
     PacMan() {
-        this.setTitle("Pecman");
+        this.setTitle("Pac-Man");
         //  setpreferedsize + setlayout(null) don't work  together
         this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
         this.setResizable(false);

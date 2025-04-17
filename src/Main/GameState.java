@@ -116,7 +116,7 @@ public class GameState {
 			g2d.fillRect(0,0, 1000, 800);
 			Image img1=new ImageIcon("C:\\Users\\Alaa\\Desktop\\github\\Pac-man\\PacmanNow\\src\\pacman\\imagesnew.png").getImage();
 			Image img2=new ImageIcon("C:\\Users\\Alaa\\Desktop\\github\\Pac-man\\PacmanNow\\src\\pacman\\cheese.png").getImage();
-			 text="PecMan";
+			 text="Pac-Man";
 			g2d.setFont(g2d.getFont().deriveFont(Font.BOLD,2*cellSize));
 			g2d.setPaint(Color.GRAY);
 			g2d.drawString(text, cellSize-6, 3*32);
